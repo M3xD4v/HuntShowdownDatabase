@@ -1,0 +1,132 @@
+<html><head><base href="https://imagedrectangle.com/"><title>Image Rectangle Selector</title><style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+#canvas-container {
+  position: relative;
+  margin-top: 20px;
+}
+#imageCanvas {
+  border: 1px solid #ccc;
+}
+#output {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+</style></head>
+<body>
+  <h1>Image Rectangle Selector</h1>
+  <p>Upload an image and draw rectangles on it. The coordinates of the rectangles will be output as JSON.</p>
+  
+  <input type="file" id="imageUpload" accept="image/*">
+  
+  <div id="canvas-container">
+    <canvas id="imageCanvas"></canvas>
+  </div>
+  
+  <button id="clearRectangles">Clear Rectangles</button>
+  <button id="generateJSON">Generate JSON</button>
+  
+  <pre id="output"></pre>
+
+  <script>
+    const canvas = document.getElementById('imageCanvas');
+    const ctx = canvas.getContext('2d');
+    const output = document.getElementById('output');
+    const imageUpload = document.getElementById('imageUpload');
+    const clearButton = document.getElementById('clearRectangles');
+    const generateButton = document.getElementById('generateJSON');
+
+    let image = null;
+    let isDrawing = false;
+    let startX, startY;
+    let rectangles = [];
+
+    imageUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        image = new Image();
+        image.onload = function() {
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+        }
+        image.src = event.target.result;
+      }
+      reader.readAsDataURL(file);
+    });
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+
+    function startDrawing(e) {
+      isDrawing = true;
+      [startX, startY] = [e.offsetX, e.offsetY];
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const rect = {
+        left: Math.min(startX, e.offsetX),
+        top: Math.min(startY, e.offsetY),
+        width: Math.abs(e.offsetX - startX),
+        height: Math.abs(e.offsetY - startY)
+      };
+      drawRectangles(rect);
+    }
+
+    function stopDrawing(e) {
+      if (!isDrawing) return;
+      isDrawing = false;
+      const rect = {
+        left: Math.min(startX, e.offsetX),
+        top: Math.min(startY, e.offsetY),
+        width: Math.abs(e.offsetX - startX),
+        height: Math.abs(e.offsetY - startY)
+      };
+      rectangles.push(rect);
+      drawRectangles();
+    }
+
+    function drawRectangles(currentRect) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 2;
+      rectangles.forEach(rect => {
+        ctx.strokeRect(rect.left, rect.top, rect.width, rect.height);
+      });
+      if (currentRect) {
+        ctx.strokeRect(currentRect.left, currentRect.top, currentRect.width, currentRect.height);
+      }
+    }
+
+    clearButton.addEventListener('click', () => {
+      rectangles = [];
+      drawRectangles();
+      output.textContent = '';
+    });
+
+    generateButton.addEventListener('click', () => {
+      const jsonOutput = JSON.stringify(rectangles, null, 2);
+      output.textContent = `const rectangles = ${jsonOutput};`;
+    });
+  </script>
+
+  <footer>
+    <p>Explore more image processing tools:</p>
+    <ul>
+      <li><a href="https://imagedrectangle.com/color-analysis">Color Analysis Tool</a></li>
+      <li><a href="https://imagedrectangle.com/face-detection">Face Detection API</a></li>
+      <li><a href="https://imagedrectangle.com/object-segmentation">Object Segmentation</a></li>
+    </ul>
+  </footer>
+</body></html>

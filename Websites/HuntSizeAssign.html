@@ -1,0 +1,558 @@
+<!DOCTYPE html><html><head><base href="https://huntshowdown-size.io/"><title>CodeCraft - Javascript Size Assigner</title>
+<style>
+  body {
+    font-family: 'Courier New', monospace;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #container {
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  h1 {
+    color: #569cd6;
+  }
+  #output {
+    white-space: pre-wrap;
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+  button {
+    background-color: #569cd6;
+    color: #1e1e1e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  button:hover {
+    background-color: #4e8ac6;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <h1>Hunt Showdown Weapon Size assign</h1>
+  <div id="inventory-list"></div>
+  <div id="output"></div>
+</div>
+
+<script>
+const inventory = [
+  {
+    "name": "Berthier Mle 1892",
+    "cost": 356
+  },
+  {
+    "name": "Berthier Mle 1892 Deadeye",
+    "cost": 388
+  },
+  {
+    "name": "Berthier Mle 1892 Marksman",
+    "cost": 580
+  },
+  {
+    "name": "Berthier Mle Riposte",
+    "cost": 370
+  },
+  {
+    "name": "Bomb Lance",
+    "cost": 199
+  },
+  {
+    "name": "Caldwell Rival 78",
+    "cost": 150
+  },
+  {
+    "name": "Crossbow",
+    "cost": 50
+  },
+  {
+    "name": "Crown & King Auto-5",
+    "cost": 600
+  },
+  {
+    "name": "Drilling",
+    "cost": 510
+  },
+  {
+    "name": "LeMat Mark II Carbine",
+    "cost": 115
+  },
+  {
+    "name": "LeMat Mark II Carbine Marksman",
+    "cost": 134
+  },
+  {
+    "name": "Lebel 1886",
+    "cost": 397
+  },
+  {
+    "name": "Lebel 1886 Aperture",
+    "cost": 425
+  },
+  {
+    "name": "Lebel 1886 Marksman",
+    "cost": 607
+  },
+  {
+    "name": "Lebel 1886 Talon",
+    "cost": 422
+  },
+  {
+    "name": "Martini-Henry IC1",
+    "cost": 122
+  },
+  {
+    "name": "Martini-Henry IC1 Deadeye",
+    "cost": 140
+  },
+  {
+    "name": "Martini-Henry IC1 Ironside",
+    "cost": 159
+  },
+  {
+    "name": "Martini-Henry IC1 Marksman",
+    "cost": 157
+  },
+  {
+    "name": "Martini-Henry IC1 Riposte",
+    "cost": 137
+  },
+  {
+    "name": "Mosin-Nagant M1891",
+    "cost": 490
+  },
+  {
+    "name": "Mosin-Nagant M1891 Avtomat",
+    "cost": 1250
+  },
+  {
+    "name": "Mosin-Nagant M1891 Bayonet",
+    "cost": 507
+  },
+  {
+    "name": "Mosin-Nagant M1891 Sniper",
+    "cost": 730
+  },
+  {
+    "name": "Nagant M1895 Officer Carbine",
+    "cost": 183
+  },
+  {
+    "name": "Nagant M1895 Officer Carbine Deadeye",
+    "cost": 199
+  },
+  {
+    "name": "Nitro Express Rifle",
+    "cost": 1015
+  },
+  {
+    "name": "Romero 77",
+    "cost": 66
+  },
+  {
+    "name": "Romero 77 Alamo",
+    "cost": 98
+  },
+  {
+    "name": "Romero 77 Talon",
+    "cost": 84
+  },
+  {
+    "name": "Sparks LRR",
+    "cost": 130
+  },
+  {
+    "name": "Sparks LRR Silencer",
+    "cost": 150
+  },
+  {
+    "name": "Sparks LRR Sniper",
+    "cost": 199
+  },
+  {
+    "name": "Specter 1882",
+    "cost": 188
+  },
+  {
+    "name": "Specter 1882 Bayonet",
+    "cost": 211
+  },
+  {
+    "name": "Springfield 1866",
+    "cost": 38
+  },
+  {
+    "name": "Springfield 1866 Bayonet",
+    "cost": 54
+  },
+  {
+    "name": "Springfield 1866 Marksman",
+    "cost": 73
+  },
+  {
+    "name": "Springfield M1892 Krag",
+    "cost": 376
+  },
+  {
+    "name": "Springfield M1892 Krag Bayonet",
+    "cost": 391
+  },
+  {
+    "name": "Springfield M1892 Krag Sniper",
+    "cost": 579
+  },
+  {
+    "name": "Vetterli 71 Karabiner",
+    "cost": 105
+  },
+  {
+    "name": "Vetterli 71 Karabiner Bayonet",
+    "cost": 115
+  },
+  {
+    "name": "Vetterli 71 Karabiner Cyclone",
+    "cost": 535
+  },
+  {
+    "name": "Vetterli 71 Karabiner Deadeye",
+    "cost": 130
+  },
+  {
+    "name": "Vetterli 71 Karabiner Marksman",
+    "cost": 190
+  },
+  {
+    "name": "Vetterli 71 Karabiner Silencer",
+    "cost": 150
+  },
+  {
+    "name": "Winfield 1887 Terminus",
+    "cost": 238
+  },
+  {
+    "name": "Winfield 1893 Slate",
+    "cost": 203
+  },
+  {
+    "name": "Winfield 1893 Slate Riposte",
+    "cost": 359
+  },
+  {
+    "name": "Winfield M1873",
+    "cost": 75
+  },
+  {
+    "name": "Winfield M1873 Aperture",
+    "cost": 80
+  },
+  {
+    "name": "Winfield M1873 Musket Bayonet",
+    "cost": 87
+  },
+  {
+    "name": "Winfield M1873 Swift",
+    "cost": 128
+  },
+  {
+    "name": "Winfield M1873 Talon",
+    "cost": 100
+  },
+  {
+    "name": "Winfield M1873C",
+    "cost": 41
+  },
+  {
+    "name": "Winfield M1873C Marksman",
+    "cost": 56
+  },
+  {
+    "name": "Winfield M1873C Silencer",
+    "cost": 55
+  },
+  {
+    "name": "Winfield M1876 Centennial",
+    "cost": 157
+  },
+  {
+    "name": "Winfield M1876 Centennial Sniper",
+    "cost": 229
+  },
+  {
+    "name": "Winfield M1876 Centennial Trauma",
+    "cost": 200
+  },
+  {
+    "name": "Bornheim No. 3 Match",
+    "cost": 180
+  },
+  {
+    "name": "Caldwell Conversion Uppercut Precision",
+    "cost": 425
+  },
+  {
+    "name": "Caldwell Conversion Uppercut Precision Deadeye",
+    "cost": 453
+  },
+  {
+    "name": "Caldwell Rival 78 Handcannon",
+    "cost": 125
+  },
+  {
+    "name": "Combat Axe",
+    "cost": null
+  },
+  {
+    "name": "Dolch 96 Precision",
+    "cost": 730
+  },
+  {
+    "name": "Drilling Handcannon",
+    "cost": 430
+  },
+  {
+    "name": "Drilling Hatchet",
+    "cost": 450
+  },
+  {
+    "name": "Hunting Bow",
+    "cost": 57
+  },
+  {
+    "name": "Katana",
+    "cost": null
+  },
+  {
+    "name": "LeMat Mark II UpperMat",
+    "cost": 290
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez",
+    "cost": 290
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez Drum",
+    "cost": 350
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez Mace",
+    "cost": 310
+  },
+  {
+    "name": "Nagant M1895 Precision",
+    "cost": 29
+  },
+  {
+    "name": "Nagant M1895 Deadeye",
+    "cost": 42
+  },
+  {
+    "name": "Railroad Hammer",
+    "cost": null
+  },
+  {
+    "name": "Romero 77 Handcannon",
+    "cost": 46
+  },
+  {
+    "name": "Romero 77 Hatchet",
+    "cost": 82
+  },
+  {
+    "name": "Scottfield Model 3 Precision",
+    "cost": 85
+  },
+  {
+    "name": "Specter 1882 Compact",
+    "cost": 164
+  },
+  {
+    "name": "Springfield 1866 Compact",
+    "cost": 33
+  },
+  {
+    "name": "Springfield 1866 Compact Deadeye",
+    "cost": 46
+  },
+  {
+    "name": "Springfield 1866 Compact Striker",
+    "cost": 47
+  },
+  {
+    "name": "Winfield 1887 Terminus Handcannon",
+    "cost": 218
+  },
+  {
+    "name": "Winfield M1873C Vandal",
+    "cost": 35
+  },
+  {
+    "name": "Winfield M1873C Vandal Deadeye",
+    "cost": 45
+  },
+  {
+    "name": "Winfield M1873C Vandal Striker",
+    "cost": 39
+  },
+  {
+    "name": "Winfield M1876 Centennial Shorty",
+    "cost": 103
+  },
+  {
+    "name": "Winfield M1876 Centennial Shorty Silencer",
+    "cost": 137
+  },
+  {
+    "name": "Baseball Bat",
+    "cost": 40
+  },
+  {
+    "name": "Bornheim No. 3",
+    "cost": 146
+  },
+  {
+    "name": "Bornheim No. 3 Extended",
+    "cost": 203
+  },
+  {
+    "name": "Bornheim No. 3 Silencer",
+    "cost": 174
+  },
+  {
+    "name": "Caldwell 92 New Army",
+    "cost": 90
+  },
+  {
+    "name": "Caldwell 92 New Army Swift",
+    "cost": 108
+  },
+  {
+    "name": "Caldwell Conversion Pistol",
+    "cost": 55
+  },
+  {
+    "name": "Caldwell Conversion Chain Pistol",
+    "cost": 84
+  },
+  {
+    "name": "Caldwell Conversion Uppercut",
+    "cost": 414
+  },
+  {
+    "name": "Caldwell Pax",
+    "cost": 80
+  },
+  {
+    "name": "Caldwell Pax Claw",
+    "cost": 105
+  },
+  {
+    "name": "Caldwell Pax Trueshot",
+    "cost": 141
+  },
+  {
+    "name": "Cavalry Saber",
+    "cost": 50
+  },
+  {
+    "name": "Dolch 96",
+    "cost": 690
+  },
+  {
+    "name": "Dolch 96 Claw",
+    "cost": 710
+  },
+  {
+    "name": "Dolch 96 Deadeye",
+    "cost": 780
+  },
+  {
+    "name": "Hand Crossbow",
+    "cost": 30
+  },
+  {
+    "name": "LeMat Mark II",
+    "cost": 83
+  },
+  {
+    "name": "Machete",
+    "cost": 30
+  },
+  {
+    "name": "Nagant M1895",
+    "cost": 24
+  },
+  {
+    "name": "Nagant M1895 Officer",
+    "cost": 96
+  },
+  {
+    "name": "Nagant M1895 Silencer",
+    "cost": 93
+  },
+  {
+    "name": "Nagant M1895 Officer Brawler",
+    "cost": 110
+  },
+  {
+    "name": "Scottfield Model 3",
+    "cost": 77
+  },
+  {
+    "name": "Scottfield Model 3 Brawler",
+    "cost": 92
+  },
+  {
+    "name": "Scottfield Model 3 Spitfire",
+    "cost": 108
+  },
+  {
+    "name": "Scottfield Model 3 Swift",
+    "cost": 95
+  },
+  {
+    "name": "Sparks Pistol",
+    "cost": 155
+  }
+];
+
+function createInventoryList() {
+  const inventoryList = document.getElementById('inventory-list');
+  inventory.forEach((item, index) => {
+    const itemDiv = document.createElement('div');
+    itemDiv.innerHTML = `
+      <p>${item.name}</p>
+      <button onclick="assignSize(${index}, 'small')">Small</button>
+      <button onclick="assignSize(${index}, 'medium')">Medium</button>
+      <button onclick="assignSize(${index}, 'long')">Long</button>
+    `;
+    inventoryList.appendChild(itemDiv);
+  });
+}
+
+function assignSize(index, size) {
+  inventory[index].size = size;
+  updateOutput();
+}
+
+function updateOutput() {
+  const output = document.getElementById('output');
+  const jsonOutput = JSON.stringify(inventory, null, 2);
+  output.textContent = jsonOutput;
+}
+
+createInventoryList();
+</script>
+</body></html>

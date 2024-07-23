@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base href="https://huntshowdown-armory.net/">
+  <title>Archient</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playwrite+CZ:wght@100..400&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: "Nunito", sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff7c42;
+      text-align: center;
+    }
+
+    select {
+      background-color: #ffbb4b;
+      color: #1a1a1a;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    label {
+      user-select: none;
+    }
+
+    #inputArea {
+      width: 100%;
+      height: 200px;
+      background-color: #2a2a2a;
+      color: #e0e0e0;
+      border: 1px solid #ff7c42;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ff7c42;
+      color: #1a1a1a;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    #results {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #ff7c42;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2a2a2a;
+    }
+
+    /* Highlight the sorted column */
+    .highlighted {
+      background-color: #ff7c42;
+      color: #1a1a1a;
+    }
+
+    .highlighted2 {
+      color: #ffcf82;
+    }
+
+    /* Style for editable cells */
+    .editable {
+      cursor: pointer;
+    }
+
+    /* Style for the input field when editing */
+    .editable input {
+      background-color: transparent;
+      color: #e0e0e0;
+      border: none;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      text-align: inherit;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Archient</h1>
+  <textarea id="inputArea" placeholder="Paste your weapon data array here..."></textarea>
+  <div>
+    <select id="sortFactor">
+      <option value="damage">Damage</option>
+      <option value="price">Price</option>
+      <option value="spread">Spread</option>
+      <option value="effectiveRange">Effective Range</option>
+      <option value="rateOfFire">Rate of Fire</option>
+      <option value="sway">Sway</option>
+      <option value="muzzleVelocity">Muzzle Velocity</option>
+      <option value="staminaConsumption">Stamina Consumption</option>
+      <option value="slot">Slot</option>
+      <option value="heavyMeleeDamage">Heavy Melee Damage</option>
+      <option value="reloadSpeed">Reload Speed</option>
+      <option value="meleeDamage">Melee Damage</option>
+      <option value="verticalRecoil">Vertical Recoil</option>
+      <option value="cycleTime">Cycle Time</option>
+      <option value="capacity">Capacity</option>
+    </select>
+    <select id="sortOrder">
+      <option value="desc">Most to Least</option>
+      <option value="asc">Least to Most</option>
+    </select>
+    <button onclick="analyzeWeapons()">Analyze Weapons</button>
+  </div>
+
+  <div>
+    <!-- Checkboxes for slot filtering -->
+    <label for="largeSlot">Large</label>
+    <input type="checkbox" id="largeSlot" checked>
+    <label for="mediumSlot">Medium</label>
+    <input type="checkbox" id="mediumSlot" checked>
+    <label for="smallSlot">Small</label>
+    <input type="checkbox" id="smallSlot" checked>
+  </div>
+
+  <div id="results"></div>
+  <script>
+    let weaponsData = {}; // Store the weapon data globally 
+
+    function analyzeWeapons() {
+      const inputData = document.getElementById('inputArea').value;
+      const sortFactor = document.getElementById('sortFactor').value;
+      const sortOrder = document.getElementById('sortOrder').value;
+      const showLarge = document.getElementById('largeSlot').checked;
+      const showMedium = document.getElementById('mediumSlot').checked;
+      const showSmall = document.getElementById('smallSlot').checked;
+
+      let weapons;
+      try {
+        weapons = JSON.parse(inputData);
+        weaponsData = weapons; // Update global weapon data
+      } catch (e) {
+        alert('Invalid JSON. Please check your input.');
+        return;
+      }
+
+      const weaponArray = Object.entries(weapons)
+        .map(([name, stats]) => ({
+          name,
+          damage: parseInt(stats.Damage),
+          price: parseInt(stats.Price),
+          spread: parseFloat(stats.Spread),
+          effectiveRange: parseInt(stats['Effective Range']),
+          rateOfFire: parseInt(stats['Rate of Fire']),
+          sway: parseFloat(stats.Sway),
+          muzzleVelocity: parseInt(stats['Muzzle Velocity']),
+          staminaConsumption: parseInt(stats['Stamina Consumption']),
+          slot: stats.Slot,
+          heavyMeleeDamage: parseInt(stats['Heavy Melee Damage']),
+          reloadSpeed: parseFloat(stats['Reload Speed']),
+          meleeDamage: parseInt(stats['Melee Damage']),
+          verticalRecoil: parseFloat(stats['Vertical Recoil']),
+          cycleTime: parseFloat(stats['Cycle Time']),
+          capacity: stats.Capacity
+        }))
+        // Filter by slot
+        .filter(weapon => {
+          if (weapon.slot === 'large' && showLarge) return true;
+          if (weapon.slot === 'medium' && showMedium) return true;
+          if (weapon.slot === 'small' && showSmall) return true;
+          return false;
+        });
+
+      weaponArray.sort((a, b) => {
+        if (sortOrder === 'asc') {
+          return a[sortFactor] - b[sortFactor];
+        } else {
+          return b[sortFactor] - a[sortFactor];
+        }
+      });
+
+      // Create table header
+      let tableHTML = `<table>
+        <tr>
+          <th>Weapon</th>
+          <th class="${sortFactor === 'damage' ? 'highlighted' : ''}">Damage</th>
+          <th class="${sortFactor === 'price' ? 'highlighted' : ''}">Price</th>
+          <th class="${sortFactor === 'spread' ? 'highlighted' : ''}">Spread</th>
+          <th class="${sortFactor === 'effectiveRange' ? 'highlighted' : ''}">Effective Range</th>
+          <th class="${sortFactor === 'rateOfFire' ? 'highlighted' : ''}">Rate of Fire</th>
+          <th class="${sortFactor === 'sway' ? 'highlighted' : ''}">Sway</th>
+          <th class="${sortFactor === 'muzzleVelocity' ? 'highlighted' : ''}">Muzzle Velocity</th>
+          <th class="${sortFactor === 'staminaConsumption' ? 'highlighted' : ''}">Stamina Consumption</th>
+          <th class="${sortFactor === 'slot' ? 'highlighted' : ''}">Slot</th>
+          <th class="${sortFactor === 'heavyMeleeDamage' ? 'highlighted' : ''}">Heavy Melee Damage</th>
+          <th class="${sortFactor === 'reloadSpeed' ? 'highlighted' : ''}">Reload Speed</th>
+          <th class="${sortFactor === 'meleeDamage' ? 'highlighted' : ''}">Melee Damage</th>
+          <th class="${sortFactor === 'verticalRecoil' ? 'highlighted' : ''}">Vertical Recoil</th>
+          <th class="${sortFactor === 'cycleTime' ? 'highlighted' : ''}">Cycle Time</th>
+          <th class="${sortFactor === 'capacity' ? 'highlighted' : ''}">Capacity</th>
+        </tr>`;
+
+      // Add table rows with editable cells
+      weaponArray.forEach(weapon => {
+        tableHTML += `<tr>
+    <td>${weapon.name}</td>
+    <td class="editable ${sortFactor === 'damage' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Damage')">${weapon.damage}</td>
+    <td class="editable ${sortFactor === 'price' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Price')">${weapon.price}</td>
+    <td class="editable ${sortFactor === 'spread' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Spread')">${weapon.spread}</td>
+    <td class="editable ${sortFactor === 'effectiveRange' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Effective Range')">${weapon.effectiveRange}</td>
+    <td class="editable ${sortFactor === 'rateOfFire' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Rate of Fire')">${weapon.rateOfFire}</td>
+    <td class="editable ${sortFactor === 'sway' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Sway')">${weapon.sway}</td>
+    <td class="editable ${sortFactor === 'muzzleVelocity' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Muzzle Velocity')">${weapon.muzzleVelocity}</td>
+    <td class="editable ${sortFactor === 'staminaConsumption' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Stamina Consumption')">${weapon.staminaConsumption}</td>
+    <td class="editable ${sortFactor === 'slot' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Slot')">${weapon.slot}</td>
+    <td class="editable ${sortFactor === 'heavyMeleeDamage' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Heavy Melee Damage')">${weapon.heavyMeleeDamage}</td>
+    <td class="editable ${sortFactor === 'reloadSpeed' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Reload Speed')">${weapon.reloadSpeed}</td>
+    <td class="editable ${sortFactor === 'meleeDamage' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Melee Damage')">${weapon.meleeDamage}</td>
+    <td class="editable ${sortFactor === 'verticalRecoil' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Vertical Recoil')">${weapon.verticalRecoil}</td>
+    <td class="editable ${sortFactor === 'cycleTime' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Cycle Time')">${weapon.cycleTime}</td>
+    <td class="editable ${sortFactor === 'capacity' ? 'highlighted2' : ''}" onclick="makeEditable(this, '${weapon.name}', 'Capacity')">${weapon.capacity}</td>
+  </tr>`;
+      });
+
+      tableHTML += '</table>';
+      document.getElementById('results').innerHTML = tableHTML;
+    }
+
+    function makeEditable(cell, weaponName, statName) {
+      // Check if the cell is already being edited
+      if (cell.querySelector('input')) return; 
+
+      // Create an input field
+      const input = document.createElement('input');
+      input.type = isNaN(parseFloat(cell.textContent)) ? 'text' : 'number';
+      input.value = cell.textContent;
+
+      // Replace cell content with input field
+      cell.innerHTML = '';
+      cell.appendChild(input);
+
+      // Focus on the input field
+      input.focus();
+
+      // Update weapon data on input blur
+      input.addEventListener('blur', () => {
+        const newValue = input.value;
+        cell.textContent = newValue; // Update cell content
+
+        // Update the global weapon data
+        weaponsData[weaponName][statName] = newValue;
+
+        // Update the text area with the updated JSON
+        document.getElementById('inputArea').value = JSON.stringify(weaponsData, null, 2);
+      });
+    }
+  </script>
+  <footer>
+    <p>Work In Progress, this is just a demo</p>
+  </footer>
+</body>
+
+</html>

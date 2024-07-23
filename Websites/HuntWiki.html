@@ -1,0 +1,301 @@
+<html>
+
+<head>
+    <style>
+        .positive {
+            background-color: lightgreen;
+        }
+
+        .negative {
+            background-color: lightcoral;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0 auto;
+            padding: 20px
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center
+        }
+
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9
+        }
+
+        tr:hover {
+            background-color: #f5f5f5
+        }
+
+        .search-container {
+            margin-bottom: 20px
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px
+        }
+
+        #weaponList {
+            list-style-type: none;
+            padding: 0
+        }
+
+        #weaponList li {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1
+        }
+
+        #weaponList li:hover {
+            background-color: #f5f5f5
+        }
+
+        ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .weaponList {
+            float: left;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .weaponDetails {
+            float: right;
+            width: 50vh;
+        }
+
+        .buh {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #weaponContainer {
+            width: 50vh;
+        }
+
+        .selected {
+            background-color: #ffc19a;
+        }
+        #toggleCompareBtn {
+            position: absolute;
+            top:70px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 15vh;
+            height: 3vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for a weapon...">
+    </div>
+    <div class="buh">
+        <div id="weaponContainer">
+            <ul id="weaponList" class="weaponList"></ul>
+        </div>
+
+        <div id="weaponDetails" class="weaponDetails"></div>
+    </div>
+    <button id="toggleCompareBtn">Compare Mode</button>
+
+    <script>
+        let weapons;
+        let selectedWeapons = [];
+        let compareMode = false; // Flag to track comparison mode (off by default)
+
+        async function fetchData() {
+            try {
+                const response = await fetch('2.json');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                weapons = data
+                populateWeaponList();
+                showWeaponDetails('Nagant M1895');
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+        window.onload = fetchData;
+
+
+        function populateWeaponList() {
+            const weaponList = document.getElementById('weaponList');
+            for (let weapon in weapons) {
+                const li = document.createElement('li');
+                li.textContent = weapon;
+                li.addEventListener('click', () => toggleWeaponSelection(weapon));
+                weaponList.appendChild(li);
+            }
+        }
+
+        function showWeaponDetails(weaponName) {
+            const weaponDetails = document.getElementById("weaponDetails");
+            const weapon = weapons[weaponName];
+            let html = `<h2>${weaponName}</h2><table><tr><th>Attribute</th><th>Value</th></tr>`;
+            for (let attr in weapon) {
+                html += `<tr><td>${attr}</td><td>${weapon[attr]}</td></tr>`;
+            }
+            html += "</table>";
+            weaponDetails.innerHTML = html;
+        }
+
+        function toggleWeaponSelection(weaponName) {
+            const weaponList = document.getElementById('weaponList');
+            const listItems = weaponList.getElementsByTagName('li');
+
+            if (compareMode) {
+                for (let i = 0; i < listItems.length; i++) {
+                const li = listItems[i];
+                if (li.textContent === weaponName) {
+                    const index = selectedWeapons.indexOf(weaponName);
+                    if (index > -1) {
+                        selectedWeapons.splice(index, 1);
+                        li.classList.remove('selected');
+                    } else {
+                        selectedWeapons.push(weaponName);
+                        li.classList.add('selected');
+                    }
+                    break; // Found the matching element, so exit the loop 
+                }
+            }
+                compareWeapons();
+            } else {
+                // In single-weapon view, show details of the clicked weapon
+                showWeaponDetails(weaponName);
+            }
+        }
+
+
+        function compareWeapons() {
+            const weaponDetails = document.getElementById('weaponDetails');
+            if (selectedWeapons.length < 2) {
+                weaponDetails.innerHTML = 'Select at least two weapons to compare.';
+                return;
+            }
+
+            // Find the first selected weapon to use as a baseline for comparison
+            const baselineWeapon = weapons[selectedWeapons[0]];
+
+            const attributes = new Set();
+            for (const weaponName of selectedWeapons) {
+                Object.keys(weapons[weaponName]).forEach(attr => attributes.add(attr));
+            }
+
+            let html = `<h2>Weapon Comparison</h2><table><tr><th>Attribute</th>`;
+            for (const weaponName of selectedWeapons) {
+                html += `<th>${weaponName}</th>`;
+            }
+            html += `</tr>`;
+
+            for (const attr of attributes) {
+                html += `<tr><td>${attr}</td>`;
+
+                // Get baseline value (could be undefined if the first weapon doesn't have it)
+                const baselineValue = parseFloat(baselineWeapon[attr]);
+
+                for (const weaponName of selectedWeapons) {
+                    let cellValue = weapons[weaponName][attr] || '-';
+                    let cellClass = '';
+                    let diff = '';
+
+                    // Only compare if it's a number
+                    if (!isNaN(baselineValue) && attr !== 'name' && attr !== 'Effective Range') {
+                        const currentValue = parseFloat(cellValue);
+                        const difference = currentValue - baselineValue;
+                        if (difference > 0) {
+                            cellClass = 'positive';
+                            diff = ` (+${difference.toFixed(1)})`;
+                        } else if (difference < 0) {
+                            cellClass = 'negative';
+                            diff = ` (${difference.toFixed(1)})`;
+                        }
+                    }
+                    html += `<td class="${cellClass}">${cellValue}${diff}</td>`;
+                }
+                html += `</tr>`;
+            }
+            html += `</table>`;
+            weaponDetails.innerHTML = html;
+        }
+        const toggleCompareBtn = document.getElementById("toggleCompareBtn");
+        toggleCompareBtn.addEventListener("click", () => {
+            compareMode = !compareMode; // Toggle the flag
+
+            if (compareMode) {
+                toggleCompareBtn.textContent = "Single Weapon Mode";
+                compareWeapons(); // Update to comparison view
+            } else {
+                toggleCompareBtn.textContent = "Compare Mode";
+                const weaponDetails = document.getElementById("weaponDetails");
+                weaponDetails.innerHTML = ""; // Clear comparison table 
+                if (selectedWeapons.length > 0) {
+                    showWeaponDetails(selectedWeapons[0]); // Show details of the first selected weapon
+                }
+            }
+        });
+
+        function searchWeapons() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const weaponList = document.getElementById('weaponList');
+            const weapons = weaponList.getElementsByTagName('li');
+
+            for (let i = 0; i < weapons.length; i++) {
+                const weaponName = weapons[i].textContent || weapons[i].innerText;
+                if (weaponName.toUpperCase().indexOf(filter) > -1) {
+                    weapons[i].style.display = "";
+                } else {
+                    weapons[i].style.display = "none";
+                }
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', searchWeapons);
+    </script>
+
+</body>
+
+</html>

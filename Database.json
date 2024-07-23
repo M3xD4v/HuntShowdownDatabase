@@ -1,0 +1,622 @@
+[
+  {
+    "name": "Berthier Mle 1892",
+    "cost": 356,
+    "size": "long"
+  },
+  {
+    "name": "Berthier Mle 1892 Deadeye",
+    "cost": 388,
+    "size": "long"
+  },
+  {
+    "name": "Berthier Mle 1892 Marksman",
+    "cost": 580,
+    "size": "long"
+  },
+  {
+    "name": "Berthier Mle Riposte",
+    "cost": 370,
+    "size": "long"
+  },
+  {
+    "name": "Bomb Lance",
+    "cost": 199,
+    "size": "long"
+  },
+  {
+    "name": "Caldwell Rival 78",
+    "cost": 150,
+    "size": "long"
+  },
+  {
+    "name": "Crossbow",
+    "cost": 50,
+    "size": "long"
+  },
+  {
+    "name": "Crown & King Auto-5",
+    "cost": 600,
+    "size": "long"
+  },
+  {
+    "name": "Drilling",
+    "cost": 510,
+    "size": "long"
+  },
+  {
+    "name": "LeMat Mark II Carbine",
+    "cost": 115,
+    "size": "long"
+  },
+  {
+    "name": "LeMat Mark II Carbine Marksman",
+    "cost": 134,
+    "size": "long"
+  },
+  {
+    "name": "Lebel 1886",
+    "cost": 397,
+    "size": "long"
+  },
+  {
+    "name": "Lebel 1886 Aperture",
+    "cost": 425,
+    "size": "long"
+  },
+  {
+    "name": "Lebel 1886 Marksman",
+    "cost": 607,
+    "size": "long"
+  },
+  {
+    "name": "Lebel 1886 Talon",
+    "cost": 422,
+    "size": "long"
+  },
+  {
+    "name": "Martini-Henry IC1",
+    "cost": 122,
+    "size": "long"
+  },
+  {
+    "name": "Martini-Henry IC1 Deadeye",
+    "cost": 140,
+    "size": "long"
+  },
+  {
+    "name": "Martini-Henry IC1 Ironside",
+    "cost": 159,
+    "size": "long"
+  },
+  {
+    "name": "Martini-Henry IC1 Marksman",
+    "cost": 157,
+    "size": "long"
+  },
+  {
+    "name": "Martini-Henry IC1 Riposte",
+    "cost": 137,
+    "size": "long"
+  },
+  {
+    "name": "Mosin-Nagant M1891",
+    "cost": 490,
+    "size": "long"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Avtomat",
+    "cost": 1250,
+    "size": "long"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Bayonet",
+    "cost": 507,
+    "size": "long"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Sniper",
+    "cost": 730,
+    "size": "long"
+  },
+  {
+    "name": "Nagant M1895 Officer Carbine",
+    "cost": 183,
+    "size": "long"
+  },
+  {
+    "name": "Nagant M1895 Officer Carbine Deadeye",
+    "cost": 199,
+    "size": "long"
+  },
+  {
+    "name": "Nitro Express Rifle",
+    "cost": 1015,
+    "size": "long"
+  },
+  {
+    "name": "Romero 77",
+    "cost": 66,
+    "size": "long"
+  },
+  {
+    "name": "Romero 77 Alamo",
+    "cost": 98,
+    "size": "long"
+  },
+  {
+    "name": "Romero 77 Talon",
+    "cost": 84,
+    "size": "long"
+  },
+  {
+    "name": "Sparks LRR",
+    "cost": 130,
+    "size": "long"
+  },
+  {
+    "name": "Sparks LRR Silencer",
+    "cost": 150,
+    "size": "long"
+  },
+  {
+    "name": "Sparks LRR Sniper",
+    "cost": 199,
+    "size": "long"
+  },
+  {
+    "name": "Specter 1882",
+    "cost": 188,
+    "size": "long"
+  },
+  {
+    "name": "Specter 1882 Bayonet",
+    "cost": 211,
+    "size": "long"
+  },
+  {
+    "name": "Springfield 1866",
+    "cost": 38,
+    "size": "long"
+  },
+  {
+    "name": "Springfield 1866 Bayonet",
+    "cost": 54,
+    "size": "long"
+  },
+  {
+    "name": "Springfield 1866 Marksman",
+    "cost": 73,
+    "size": "long"
+  },
+  {
+    "name": "Springfield M1892 Krag",
+    "cost": 376,
+    "size": "long"
+  },
+  {
+    "name": "Springfield M1892 Krag Bayonet",
+    "cost": 391,
+    "size": "long"
+  },
+  {
+    "name": "Springfield M1892 Krag Sniper",
+    "cost": 579,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner",
+    "cost": 105,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner Bayonet",
+    "cost": 115,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner Cyclone",
+    "cost": 535,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner Deadeye",
+    "cost": 130,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner Marksman",
+    "cost": 190,
+    "size": "long"
+  },
+  {
+    "name": "Vetterli 71 Karabiner Silencer",
+    "cost": 150,
+    "size": "long"
+  },
+  {
+    "name": "Winfield 1887 Terminus",
+    "cost": 238,
+    "size": "long"
+  },
+  {
+    "name": "Winfield 1893 Slate",
+    "cost": 203,
+    "size": "long"
+  },
+  {
+    "name": "Winfield 1893 Slate Riposte",
+    "cost": 359,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873",
+    "cost": 75,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873 Aperture",
+    "cost": 80,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873 Musket Bayonet",
+    "cost": 87,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873 Swift",
+    "cost": 128,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873 Talon",
+    "cost": 100,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873C",
+    "cost": 41,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873C Marksman",
+    "cost": 56,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1873C Silencer",
+    "cost": 55,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1876 Centennial",
+    "cost": 157,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1876 Centennial Sniper",
+    "cost": 229,
+    "size": "long"
+  },
+  {
+    "name": "Winfield M1876 Centennial Trauma",
+    "cost": 200,
+    "size": "long"
+  },
+  {
+    "name": "Caldwell Marathon",
+    "cost": 68,
+    "size": "long"
+  },
+  {
+    "name": "Caldwell Marathon Swift",
+    "cost": 95,
+    "size": "long"
+  },
+  {
+    "name": "Mako 1895 Carabine",
+    "cost": 360,
+    "size": "long"
+  },
+  {
+    "name": "Mako 1895 Carabine Claw",
+    "cost": 370,
+    "size": "long"
+  },
+  {
+    "name": "Mako 1895 Carabine Aperture",
+    "cost": 385,
+    "size": "long"
+  },
+  {
+    "name": "Bornheim No. 3 Match",
+    "cost": 180,
+    "size": "medium"
+  },
+  {
+    "name": "Caldwell Conversion Uppercut Precision",
+    "cost": 425,
+    "size": "medium"
+  },
+  {
+    "name": "Caldwell Conversion Uppercut Precision Deadeye",
+    "cost": 453,
+    "size": "medium"
+  },
+  {
+    "name": "Caldwell Rival 78 Handcannon",
+    "cost": 125,
+    "size": "medium"
+  },
+  {
+    "name": "Combat Axe",
+    "cost": 40,
+    "size": "medium"
+  },
+  {
+    "name": "Dolch 96 Precision",
+    "cost": 730,
+    "size": "medium"
+  },
+  {
+    "name": "Drilling Handcannon",
+    "cost": 430,
+    "size": "medium"
+  },
+  {
+    "name": "Drilling Hatchet",
+    "cost": 450,
+    "size": "medium"
+  },
+  {
+    "name": "Hunting Bow",
+    "cost": 57,
+    "size": "medium"
+  },
+  {
+    "name": "Katana",
+    "cost": 115,
+    "size": "medium"
+  },
+  {
+    "name": "LeMat Mark II UpperMat",
+    "cost": 370,
+    "size": "medium"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez",
+    "cost": 290,
+    "size": "medium"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez Drum",
+    "cost": 350,
+    "size": "medium"
+  },
+  {
+    "name": "Mosin-Nagant M1891 Obrez Mace",
+    "cost": 310,
+    "size": "medium"
+  },
+  {
+    "name": "Nagant M1895 Precision",
+    "cost": 29,
+    "size": "medium"
+  },
+  {
+    "name": "Nagant M1895 Deadeye",
+    "cost": 42,
+    "size": "medium"
+  },
+  {
+    "name": "Railroad Hammer",
+    "cost": 45,
+    "size": "medium"
+  },
+  {
+    "name": "Romero 77 Handcannon",
+    "cost": 46,
+    "size": "medium"
+  },
+  {
+    "name": "Romero 77 Hatchet",
+    "cost": 82,
+    "size": "medium"
+  },
+  {
+    "name": "Scottfield Model 3 Precision",
+    "cost": 85,
+    "size": "medium"
+  },
+  {
+    "name": "Specter 1882 Compact",
+    "cost": 164,
+    "size": "medium"
+  },
+  {
+    "name": "Springfield 1866 Compact",
+    "cost": 33,
+    "size": "medium"
+  },
+  {
+    "name": "Springfield 1866 Compact Deadeye",
+    "cost": 46,
+    "size": "medium"
+  },
+  {
+    "name": "Springfield 1866 Compact Striker",
+    "cost": 47,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield 1887 Terminus Handcannon",
+    "cost": 218,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield M1873C Vandal",
+    "cost": 35,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield M1873C Vandal Deadeye",
+    "cost": 45,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield M1873C Vandal Striker",
+    "cost": 39,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield M1876 Centennial Shorty",
+    "cost": 103,
+    "size": "medium"
+  },
+  {
+    "name": "Winfield M1876 Centennial Shorty Silencer",
+    "cost": 137,
+    "size": "medium"
+  },
+  {
+    "name": "Baseball Bat",
+    "cost": 40,
+    "size": "small"
+  },
+  {
+    "name": "Bornheim No. 3",
+    "cost": 146,
+    "size": "small"
+  },
+  {
+    "name": "Bornheim No. 3 Extended",
+    "cost": 203,
+    "size": "small"
+  },
+  {
+    "name": "Bornheim No. 3 Silencer",
+    "cost": 174,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell 92 New Army",
+    "cost": 90,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell 92 New Army Swift",
+    "cost": 108,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Conversion Pistol",
+    "cost": 55,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Conversion Chain Pistol",
+    "cost": 84,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Conversion Uppercut",
+    "cost": 414,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Pax",
+    "cost": 80,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Pax Claw",
+    "cost": 105,
+    "size": "small"
+  },
+  {
+    "name": "Caldwell Pax Trueshot",
+    "cost": 141,
+    "size": "small"
+  },
+  {
+    "name": "Cavalry Saber",
+    "cost": 50,
+    "size": "small"
+  },
+  {
+    "name": "Dolch 96",
+    "cost": 690,
+    "size": "small"
+  },
+  {
+    "name": "Dolch 96 Claw",
+    "cost": 710,
+    "size": "small"
+  },
+  {
+    "name": "Dolch 96 Deadeye",
+    "cost": 780,
+    "size": "small"
+  },
+  {
+    "name": "Hand Crossbow",
+    "cost": 30,
+    "size": "small"
+  },
+  {
+    "name": "LeMat Mark II",
+    "cost": 83,
+    "size": "small"
+  },
+  {
+    "name": "Machete",
+    "cost": 30,
+    "size": "small"
+  },
+  {
+    "name": "Nagant M1895",
+    "cost": 24,
+    "size": "small"
+  },
+  {
+    "name": "Nagant M1895 Officer",
+    "cost": 96,
+    "size": "small"
+  },
+  {
+    "name": "Nagant M1895 Silencer",
+    "cost": 93,
+    "size": "small"
+  },
+  {
+    "name": "Nagant M1895 Officer Brawler",
+    "cost": 110,
+    "size": "small"
+  },
+  {
+    "name": "Scottfield Model 3",
+    "cost": 77,
+    "size": "small"
+  },
+  {
+    "name": "Scottfield Model 3 Brawler",
+    "cost": 92,
+    "size": "small"
+  },
+  {
+    "name": "Scottfield Model 3 Spitfire",
+    "cost": 108,
+    "size": "small"
+  },
+  {
+    "name": "Scottfield Model 3 Swift",
+    "cost": 95,
+    "size": "small"
+  },
+  {
+    "name": "Sparks Pistol",
+    "cost": 155,
+    "size": "small"
+  }
+]
